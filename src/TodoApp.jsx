@@ -1,73 +1,16 @@
-import React, { useEffect } from 'react'
 import './TodoApp.css'
-import { useReducer } from 'react'
-import { todoReducer } from './todoReducer.js'
 import { Task } from './components/Task.jsx'
-import { useForm } from './hooks/useForm.js'
-
-const initialState = []    
-
-const init = () => {
-    return JSON.parse(localStorage.getItem('todos')) || []
-}
-
+import { useTodos } from './hooks/useTodos.js'
+    
 export const TodoApp = () => {    
 
-    const [todos, dispatch] = useReducer(todoReducer, initialState, init)
-
-    useEffect(() => {
-        localStorage.setItem('todos', JSON.stringify(todos))
-    }, [todos])
-
-    const handleNewTodo = (todo) => {
-
-        const action = {
-            type: 'Add Todo',
-            payload: todo
-        }
-        dispatch(action);
+    const {todos, description, handleDeleteTodo, handleToggleTodo, onInputChange, onFormSubmit, total, pending} = useTodos()
     
-    }
-
-    const {description, onInputChange, onResetForm} = useForm({
-    description: ''
-})
-
-    const onFormSubmit = (event) => {
-        event.preventDefault();
-        if (description.length <= 1) return;
-
-        const newTodo = {
-            id: new Date().getTime(),
-            description: description,
-            completed: false
-        }
-        onResetForm();
-        handleNewTodo(newTodo);
-    }
-
-    const handleDeleteTodo = (id) => {
-        const action = {
-            type: 'Remove Todo',
-            payload: id
-        }
-        dispatch(action);
-        
-    }
-    const handleToggleTodo = (id) => {
-        const action = {
-            type: 'Toggle Todo',
-            payload: id
-        }
-        dispatch(action);
-        
-    }
-
     return (
     <>
 
     <div id='box-main-title'>
-        <h2>Todo App, total: pendientes: </h2>
+        <h2>Todo App - total: {total} pendientes: {pending}</h2>
     </div>
     <div id='box-list'>
         <div id='box-list-container'>
