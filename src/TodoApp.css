@@ -63,6 +63,7 @@ body {
     margin-right: 1.5rem;
     margin-left: 0.5rem;
     color: black;
+    cursor: pointer;
 }
 .box-task button {
     border-radius: 5px;
@@ -108,4 +109,7 @@ body {
     background-color: #00995E;
     color: black;
     font-weight: bold;
+}
+.tachar {
+    text-decoration: line-through;
 }
